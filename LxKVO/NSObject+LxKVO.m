@@ -65,17 +65,17 @@ static void kvo_setter(id self, SEL _cmd, id newValue)
     Method setterMethod = class_getInstanceMethod(object_getClass(self), setterSelector);
     NSCAssert(setterMethod, @"DeveloperLx: %@'s key %@ can't be observed!", [self class], key);
     
-    Class kvoClass = object_getClass(self);
+    Class selfClass = object_getClass(self);
     
-    NSString * selfClassName = NSStringFromClass(kvoClass);
+    NSString * selfClassName = NSStringFromClass(selfClass);
     if (![selfClassName hasPrefix:KVO_CLASS_PREFIX]) {
-        kvoClass = [self kvoClass];
-        object_setClass(self, kvoClass);
+        selfClass = [self kvoClass];
+        object_setClass(self, selfClass);
     }
     
     if (![self hasSelector:setterSelector]) {
         const char * typeEncoding = method_getTypeEncoding(setterMethod);
-        class_addMethod(kvoClass, setterSelector, (IMP)kvo_setter, typeEncoding);
+        class_addMethod(selfClass, setterSelector, (IMP)kvo_setter, typeEncoding);
     }
 
     NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
