@@ -59,11 +59,25 @@ static void kvo_setter(id self, SEL _cmd, id newValue)
 
 #pragma mark - implementation
 
-- (void)observedKey:(NSString *)key withChange:(ChangeBlock)change
+- (void)observedKeyPath:(NSString *)keyPath withChange:(ChangeBlock)change
 {
-    SEL setterSelector = NSSelectorFromString(setterForGetter(key));
+    NSCAssert([self judgeLegalityOfKeyPath:keyPath], @"DeveloperLx: keyPath: %@ format error!", keyPath);
+    
+    NSArray * keyPathArray = [keyPath componentsSeparatedByString:@"."];
+    if (keyPathArray.count > 1) {
+        NSMutableArray * mutableKeyPathArray = [NSMutableArray arrayWithArray:keyPathArray];
+        NSString * key = mutableKeyPathArray.lastObject;
+        [mutableKeyPathArray removeLastObject];
+        NSString * objectPath = [mutableKeyPathArray componentsJoinedByString:@"."];
+        NSObject * object = [self valueForKeyPath:objectPath];
+        NSCAssert(object, @"DeveloperLx: keyPath: %@ format error!", keyPath);
+        [object observedKeyPath:key withChange:change];
+        return;
+    }
+    
+    SEL setterSelector = NSSelectorFromString(setterForGetter(keyPath));
     Method setterMethod = class_getInstanceMethod(object_getClass(self), setterSelector);
-    NSCAssert(setterMethod, @"DeveloperLx: %@'s key %@ can't be observed!", [self class], key);
+    NSCAssert(setterMethod, @"DeveloperLx: %@'s keyPath %@ can't be observed!", [self class], keyPath);
     
     Class selfClass = object_getClass(self);
     
@@ -83,13 +97,33 @@ static void kvo_setter(id self, SEL _cmd, id newValue)
         changeDictionary = [NSMutableDictionary dictionary];
         objc_setAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY), changeDictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    [changeDictionary setValue:[change copy] forKey:key];
+    [changeDictionary setValue:[change copy] forKey:keyPath];
 }
 
-- (void)stopObservedKey:(NSString *)key
+- (void)stopObservedKeyPath:(NSString *)keyPath
 {
+    NSCAssert([self judgeLegalityOfKeyPath:keyPath], @"DeveloperLx: keyPath: %@ format error!", keyPath);
+    
+    NSArray * keyPathArray = [keyPath componentsSeparatedByString:@"."];
+    if (keyPathArray.count > 1) {
+        NSMutableArray * mutableKeyPathArray = [NSMutableArray arrayWithArray:keyPathArray];
+        NSString * key = mutableKeyPathArray.lastObject;
+        [mutableKeyPathArray removeLastObject];
+        NSString * objectPath = [mutableKeyPathArray componentsJoinedByString:@"."];
+        NSObject * object = [self valueForKeyPath:objectPath];
+        NSCAssert(object, @"DeveloperLx: keyPath: %@ format error!", keyPath);
+        [object stopObservedKeyPath:key];
+        return;
+    }
+    
     NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    [changeDictionary setValue:nil forKey:key];
+    [changeDictionary setValue:nil forKey:keyPath];
+}
+
+- (BOOL)judgeLegalityOfKeyPath:(NSString *)keyPath
+{
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[_a-zA-Z]+(\\.[_a-zA-Z][_a-zA-Z0-9]*)*$"];
+    return [predicate evaluateWithObject:keyPath];
 }
 
 - (Class)kvoClass
