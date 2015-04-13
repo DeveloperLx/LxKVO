@@ -44,7 +44,7 @@
     
     LxStopKVO(self, view.tintColor);
 //    or
-//    [self stopObservedKeyPath:@"view.backgroundColor"];
+//    [self stopObservedKeyPath:@"view.tintColor"];
 }
 
 @end
