@@ -11,18 +11,18 @@ Usage
     - (void)viewDidLoad {
         [super viewDidLoad];
  
-        LxKVO(self, view.tintColor, ^(id oldValue, id newValue) {
-            NSLog(@"view.tintColor:[%@->%@]", oldValue, newValue);  //
+        LxKVO(self, view.tintColor, ^(id oldValue, id newValue, LxKVOChangeStatus changeStatus) {
+            NSLog(@"self's view.tintColor %@ change:[%@->%@]", changeStatus==LxKVOChangeStatusWill?@"will":@"did", oldValue,          newValue);  //
         });
-        LxKVO(self.view, alpha, ^(id oldValue, id newValue) {
-            NSLog(@"alpha:[%@->%@]", oldValue, newValue);  //
+        LxKVO(self.view, alpha, ^(id oldValue, id newValue, LxKVOChangeStatus changeStatus) {
+            NSLog(@"self.view's alpha %@ change:[%@->%@]", changeStatus==LxKVOChangeStatusWill?@"will":@"did", oldValue,              newValue);  //
         });
     //    or
-    //    [self observedKeyPath:@"view.tintColor" withChange:^(id oldValue, id newValue) {
-    //        NSLog(@"view.tintColor:[%@->%@]", oldValue, newValue);  //
+    //    [self observedKeyPath:@"view.tintColor" withChange:^(id oldValue, id newValue, LxKVOChangeStatus changeStatus) {
+    //        NSLog(@"self's view.tintColor %@ change:[%@->%@]", changeStatus==LxKVOChangeStatusWill?@"will":@"did", oldValue,     newValue);  //
     //    }];
-    //    [self.view observedKeyPath:@"alpha" withChange:^(id oldValue, id newValue) {
-    //        NSLog(@"alpha:[%@->%@]", oldValue, newValue);  //
+    //    [self.view observedKeyPath:@"alpha" withChange:^(id oldValue, id newValue, LxKVOChangeStatus changeStatus) {
+    //        NSLog(@"self.view's alpha %@ change:[%@->%@]", changeStatus==LxKVOChangeStatusWill?@"will":@"did", oldValue,        newValue);  //
     //    }];
     
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timer1:) userInfo:nil repeats:YES];
