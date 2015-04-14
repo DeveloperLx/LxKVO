@@ -51,11 +51,7 @@ static void kvo_setter_char(id self, SEL _cmd, char newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_unsignedChar(id self, SEL _cmd, unsigned char newValue)
@@ -66,6 +62,8 @@ static void kvo_setter_unsignedChar(id self, SEL _cmd, unsigned char newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -74,12 +72,8 @@ static void kvo_setter_unsignedChar(id self, SEL _cmd, unsigned char newValue)
     void (*casted_objc_msgSendSuper)(void *, SEL, unsigned char) = (void *)objc_msgSendSuper;
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
-    
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_short(id self, SEL _cmd, short newValue)
@@ -90,6 +84,8 @@ static void kvo_setter_short(id self, SEL _cmd, short newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -99,11 +95,7 @@ static void kvo_setter_short(id self, SEL _cmd, short newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_unsignedShort(id self, SEL _cmd, unsigned short newValue)
@@ -114,6 +106,8 @@ static void kvo_setter_unsignedShort(id self, SEL _cmd, unsigned short newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -123,11 +117,7 @@ static void kvo_setter_unsignedShort(id self, SEL _cmd, unsigned short newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_int(id self, SEL _cmd, int newValue)
@@ -138,6 +128,8 @@ static void kvo_setter_int(id self, SEL _cmd, int newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -147,11 +139,7 @@ static void kvo_setter_int(id self, SEL _cmd, int newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_unsignedInt(id self, SEL _cmd, unsigned int newValue)
@@ -162,6 +150,8 @@ static void kvo_setter_unsignedInt(id self, SEL _cmd, unsigned int newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -171,11 +161,7 @@ static void kvo_setter_unsignedInt(id self, SEL _cmd, unsigned int newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_long(id self, SEL _cmd, long newValue)
@@ -186,6 +172,8 @@ static void kvo_setter_long(id self, SEL _cmd, long newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -195,11 +183,7 @@ static void kvo_setter_long(id self, SEL _cmd, long newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_unsignedLong(id self, SEL _cmd, unsigned long newValue)
@@ -210,6 +194,8 @@ static void kvo_setter_unsignedLong(id self, SEL _cmd, unsigned long newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -219,11 +205,7 @@ static void kvo_setter_unsignedLong(id self, SEL _cmd, unsigned long newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_longLong(id self, SEL _cmd, long long newValue)
@@ -234,6 +216,8 @@ static void kvo_setter_longLong(id self, SEL _cmd, long long newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -243,11 +227,7 @@ static void kvo_setter_longLong(id self, SEL _cmd, long long newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_unsignedLongLong(id self, SEL _cmd, unsigned long long newValue)
@@ -258,6 +238,8 @@ static void kvo_setter_unsignedLongLong(id self, SEL _cmd, unsigned long long ne
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -267,11 +249,7 @@ static void kvo_setter_unsignedLongLong(id self, SEL _cmd, unsigned long long ne
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_float(id self, SEL _cmd, float newValue)
@@ -282,6 +260,8 @@ static void kvo_setter_float(id self, SEL _cmd, float newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -291,11 +271,7 @@ static void kvo_setter_float(id self, SEL _cmd, float newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_double(id self, SEL _cmd, double newValue)
@@ -306,6 +282,8 @@ static void kvo_setter_double(id self, SEL _cmd, double newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -315,35 +293,7 @@ static void kvo_setter_double(id self, SEL _cmd, double newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
-}
-
-static void kvo_setter_object(id self, SEL _cmd, id newValue)
-{
-    NSString * setterName = NSStringFromSelector(_cmd);
-    NSCAssert(setterName, @"DeveloperLx: parameter _cmd error!");
-    NSString * getterName = getterForSetter(setterName);
-    
-    id oldValue = [self valueForKey:getterName];
-    
-    struct objc_super superClass = {
-        .receiver = self,
-        .super_class = class_getSuperclass(object_getClass(self))
-    };
-    
-    void (*casted_objc_msgSendSuper)(void *, SEL, id) = (void *)objc_msgSendSuper;
-    
-    casted_objc_msgSendSuper(&superClass, _cmd, newValue);
-    
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, newValue);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_bool(id self, SEL _cmd, bool newValue)
@@ -354,6 +304,8 @@ static void kvo_setter_bool(id self, SEL _cmd, bool newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -363,11 +315,29 @@ static void kvo_setter_bool(id self, SEL _cmd, bool newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, @(newValue));
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:@(newValue) changeStatus:LxKVOChangeStatusDid];
+}
+
+static void kvo_setter_object(id self, SEL _cmd, id newValue)
+{
+    NSString * setterName = NSStringFromSelector(_cmd);
+    NSCAssert(setterName, @"DeveloperLx: parameter _cmd error!");
+    NSString * getterName = getterForSetter(setterName);
+    
+    id oldValue = [self valueForKey:getterName];
+    
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:newValue changeStatus:LxKVOChangeStatusWill];
+    
+    struct objc_super superClass = {
+        .receiver = self,
+        .super_class = class_getSuperclass(object_getClass(self))
+    };
+    
+    void (*casted_objc_msgSendSuper)(void *, SEL, id) = (void *)objc_msgSendSuper;
+    
+    casted_objc_msgSendSuper(&superClass, _cmd, newValue);
+    
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:newValue changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_point(id self, SEL _cmd, CGPoint newValue)
@@ -378,6 +348,8 @@ static void kvo_setter_point(id self, SEL _cmd, CGPoint newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGPoint:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -387,11 +359,7 @@ static void kvo_setter_point(id self, SEL _cmd, CGPoint newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithCGPoint:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGPoint:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_size(id self, SEL _cmd, CGSize newValue)
@@ -402,6 +370,8 @@ static void kvo_setter_size(id self, SEL _cmd, CGSize newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGSize:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -411,11 +381,7 @@ static void kvo_setter_size(id self, SEL _cmd, CGSize newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithCGSize:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGSize:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_rect(id self, SEL _cmd, CGRect newValue)
@@ -426,6 +392,8 @@ static void kvo_setter_rect(id self, SEL _cmd, CGRect newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGRect:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -435,11 +403,7 @@ static void kvo_setter_rect(id self, SEL _cmd, CGRect newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithCGRect:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGRect:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_edgeInsets(id self, SEL _cmd, UIEdgeInsets newValue)
@@ -450,6 +414,8 @@ static void kvo_setter_edgeInsets(id self, SEL _cmd, UIEdgeInsets newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithUIEdgeInsets:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -459,11 +425,7 @@ static void kvo_setter_edgeInsets(id self, SEL _cmd, UIEdgeInsets newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithUIEdgeInsets:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithUIEdgeInsets:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_offset(id self, SEL _cmd, UIOffset newValue)
@@ -474,6 +436,8 @@ static void kvo_setter_offset(id self, SEL _cmd, UIOffset newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithUIOffset:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -483,11 +447,7 @@ static void kvo_setter_offset(id self, SEL _cmd, UIOffset newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithUIOffset:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithUIOffset:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_affineTransform(id self, SEL _cmd, CGAffineTransform newValue)
@@ -498,6 +458,8 @@ static void kvo_setter_affineTransform(id self, SEL _cmd, CGAffineTransform newV
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGAffineTransform:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -507,11 +469,7 @@ static void kvo_setter_affineTransform(id self, SEL _cmd, CGAffineTransform newV
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithCGAffineTransform:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCGAffineTransform:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_transform3D(id self, SEL _cmd, CATransform3D newValue)
@@ -522,6 +480,8 @@ static void kvo_setter_transform3D(id self, SEL _cmd, CATransform3D newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCATransform3D:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -531,11 +491,7 @@ static void kvo_setter_transform3D(id self, SEL _cmd, CATransform3D newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithCATransform3D:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithCATransform3D:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_pointer(id self, SEL _cmd, const void * newValue)
@@ -546,6 +502,8 @@ static void kvo_setter_pointer(id self, SEL _cmd, const void * newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithPointer:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -555,11 +513,7 @@ static void kvo_setter_pointer(id self, SEL _cmd, const void * newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
-    NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
-    ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
-    if (change) {
-        change(oldValue, [NSValue valueWithPointer:newValue]);
-    }
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithPointer:newValue] changeStatus:LxKVOChangeStatusDid];
 }
 
 static void kvo_setter_range(id self, SEL _cmd, NSRange newValue)
@@ -570,6 +524,8 @@ static void kvo_setter_range(id self, SEL _cmd, NSRange newValue)
     
     id oldValue = [self valueForKey:getterName];
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithRange:newValue] changeStatus:LxKVOChangeStatusWill];
+    
     struct objc_super superClass = {
         .receiver = self,
         .super_class = class_getSuperclass(object_getClass(self))
@@ -579,24 +535,24 @@ static void kvo_setter_range(id self, SEL _cmd, NSRange newValue)
     
     casted_objc_msgSendSuper(&superClass, _cmd, newValue);
     
+    [self callbackChangeBlockWithGetterName:getterName oldValue:oldValue newValue:[NSValue valueWithRange:newValue] changeStatus:LxKVOChangeStatusDid];
+}
+
+- (void)callbackChangeBlockWithGetterName:(NSString *)getterName oldValue:(id)oldValue newValue:(id)newValue changeStatus:(LxKVOChangeStatus)changeStatus
+{
     NSMutableDictionary * changeDictionary = objc_getAssociatedObject(self, (__bridge const void *)(CHANGE_DICTIONARY_KEY));
     ChangeBlock change = (ChangeBlock)(changeDictionary[getterName]);
     if (change) {
-        change(oldValue, [NSValue valueWithRange:newValue]);
+        change(oldValue, newValue, changeStatus);
     }
 }
 
 const char * setterValueTypeEncodingFor(const char * setterTypeEncoding)
 {
     NSString * setterTypeEncodingOCString = [NSString stringWithUTF8String:setterTypeEncoding];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^v\\d{2}@0:[48].+(8|16)$"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^v\\d{2}@0:4.+8$"];
     NSCAssert([predicate evaluateWithObject:setterTypeEncodingOCString], @"DeveloperLx: setterTypeEncoding: %@ format error!", setterTypeEncodingOCString);
-    for (NSInteger i = setterTypeEncodingOCString.length - 1; i >= 0; i--) {
-        if ([setterTypeEncodingOCString characterAtIndex:i] < '0' || [setterTypeEncodingOCString characterAtIndex:i] > '9') {
-            return [setterTypeEncodingOCString substringWithRange:NSMakeRange(7, i - 6)].UTF8String;
-        }
-    }
-    return NULL;
+    return [setterTypeEncodingOCString substringWithRange:NSMakeRange(7, setterTypeEncodingOCString.length - 8)].UTF8String;
 }
 
 #pragma mark - implementation

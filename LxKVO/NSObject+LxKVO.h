@@ -5,7 +5,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^ChangeBlock)(id oldValue, id newValue);
+typedef NS_ENUM(NSInteger, LxKVOChangeStatus) {
+    LxKVOChangeStatusWill,
+    LxKVOChangeStatusDid
+};
+
+typedef void (^ChangeBlock)(id oldValue, id newValue, LxKVOChangeStatus changeStatus);
 
 #define OBJECT_KEYPATH(object, keyPath)     [NSString stringWithUTF8String:(((void)(NO&&((void)object.keyPath,NO)), #keyPath))]
 #define LxKVO(object, keyPath, changeBlock) [object observedKeyPath:OBJECT_KEYPATH(object, keyPath) withChange:changeBlock]
